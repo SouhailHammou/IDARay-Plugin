@@ -61,7 +61,7 @@ class SingleDetailsView(idaapi.Choose2) :
 	def __init__(self, rule) :
 		idaapi.Choose2.__init__(self,
 		"Matched strings for rule : %s" % rule.rule,
-		[ ["Offset (double-click to follow)", 20 | Choose2.CHCOL_HEX], ["Matched String", 50 | Choose2.CHCOL_PLAIN] ],
+		[ ["Offset (double-click to follow)", 20 | Choose2.CHCOL_HEX], ["Matched Strings/Patterns", 50 | Choose2.CHCOL_PLAIN] ],
 		Choose2.CH_MODAL)
 		
 		self.strings = rule.strings
@@ -71,7 +71,17 @@ class SingleDetailsView(idaapi.Choose2) :
 		return
 
 	def OnGetLine(self, n):
-		return [ str(hex(self.strings[n][0])).strip('L').upper().replace('X','x'), self.strings[n][2] ]
+		#Some logic to distinguish strings from patterns
+		matched = self.strings[n][2]
+		
+		#is this a pattern and not a string ?
+		if not all( ord(c) < 0x7F and ord(c) > 0x1F for c in matched ) :
+			bytes = matched
+			matched = '{'
+			for b in bytes : 
+				matched += ' %02x'.upper() % ord(b)
+			matched += ' }'
+		return [ str(hex(self.strings[n][0])).strip('L').upper().replace('X','x'), matched ]
 
 	def OnGetSize(self):
 		return len(self.strings)
