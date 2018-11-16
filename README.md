@@ -12,4 +12,4 @@ IDARay is an IDA Pro plugin that matches the database against multiple YARA file
 ![](demo.gif)
 
 ## Note :
-This plugin is tested on IDA 6.8, feel free to copy it, modify it or port it to newer versions. 
+This plugin has been tested under IDA 6.8, feel free to copy it, modify it, or port it to newer versions. 
