@@ -3,7 +3,7 @@ IDARay - A simple IDA plugin that matches the database against multiple YARA fil
 Author : Souhail Hammou
 
 Plugin tested under IDA Pro 6.8
-Feel free to copy or edit plugin.
+Feel free to copy or edit the plugin.
 '''
 from idc import *
 from idaapi import *
@@ -71,9 +71,9 @@ class SingleDetailsView(idaapi.Choose2) :
 		return
 
 	def OnGetLine(self, n):
-		#Some logic to distinguish strings from patterns
 		matched = self.strings[n][2]
 		
+		#Some logic to distinguish strings from patterns
 		#is this a pattern and not a string ?
 		if not all( ord(c) < 0x7F and ord(c) > 0x1F for c in matched ) :
 			bytes = matched
@@ -156,7 +156,7 @@ class ChooseFiles(idaapi.Form) :
 
 		Welcome to IDARay !
 		IDARay matches the database against multiple 
-		YARA files, which themselves may contain multiple rules.
+		YARA files which themselves may contain multiple rules.
 		
 		Please select a directory containing YARA files only.
 		YARA Directory		<:{dir}>
@@ -192,7 +192,7 @@ class idaray_handler(idaapi.action_handler_t):
 		
 class idaray_plugin_t(idaapi.plugin_t):
 	flags = idaapi.PLUGIN_UNL
-	comment = "Scan database with multiple YARA files"
+	comment = "Scans the database with multiple YARA files"
 	wanted_name = "IDARay Plugin"
 	help = "help"
 	wanted_hotkey = ""
